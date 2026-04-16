@@ -4,6 +4,7 @@ resource "aws_instance" "guestbook_nat_instance_a" {
   key_name      = "guestbook-nat"
 
   subnet_id              = aws_subnet.public_subnet1_a.id
+  availability_zone      = "ap-northeast-2a"
   vpc_security_group_ids = [aws_security_group.nat_sg.id]
 
   source_dest_check = false

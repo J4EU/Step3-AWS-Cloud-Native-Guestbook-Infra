@@ -4,6 +4,7 @@ resource "aws_instance" "guestbook_nat_instance_c" {
   key_name      = "guestbook-nat"
 
   subnet_id              = aws_subnet.public_subnet1_c.id
+  availability_zone      = "ap-northeast-2c"
   vpc_security_group_ids = [aws_security_group.nat_sg.id]
 
   source_dest_check = false
@@ -28,7 +29,7 @@ resource "aws_instance" "guestbook_nat_instance_c" {
 }
 
 resource "aws_eip" "guestbook_nat2_eip" {
-  instance = aws_instance.guestbook_nat_instance_a.id
+  instance = aws_instance.guestbook_nat_instance_c.id
 
   # EIP를 특정 VPC 안에서 사용하기 위해 할당 받겠다라는 선언
   domain = "vpc"
