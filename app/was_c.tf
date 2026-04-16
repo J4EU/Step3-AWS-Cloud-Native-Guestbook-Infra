@@ -1,15 +1,18 @@
-resource "aws_instance" "was_a" {
+resource "aws_instance" "was_c" {
   ami           = data.aws_ami.amazon_linux_2023_arm64.id
   instance_type = var.was_instance_type
   key_name      = "guestbook-was"
 
-  subnet_id         = aws_subnet.private_subnet1_a.id
-  availability_zone = "ap-northeast-2a"
-  security_groups   = [aws_security_group.was_sg.id]
+  subnet_id              = data.terraform_remote_state.core_link.outputs.private_subnet1_c
+  availability_zone      = "ap-northeast-2c"
+  vpc_security_group_ids = [aws_security_group.was_sg.id]
+
+  iam_instance_profile = aws_iam_instance_profile.was_profile.name
 
   associate_public_ip_address = false
 
   user_data = <<-EOF
+    #!/bin/bash
     sudo dnf update -y
     sudo dnf install -y python3-pip
     sudo dnf install -y mariadb114
@@ -18,6 +21,6 @@ resource "aws_instance" "was_a" {
   EOF
 
   tags = {
-    Name = "WAS-a"
+    Name = "WAS-c"
   }
 }

@@ -1,6 +1,6 @@
 resource "aws_db_subnet_group" "db_sn_group" {
   name       = "rds-db-subnet-group"
-  subnet_ids = [aws_subnet.private_subnet2_a.id, aws_subnet.private_subnet2_c.id]
+  subnet_ids = [data.terraform_remote_state.core_link.outputs.private_subnet2_a, data.terraform_remote_state.core_link.outputs.private_subnet2_c]
 
   tags = {
     Name = "DB Subnet Group"
@@ -43,4 +43,8 @@ resource "aws_db_instance" "rds" {
 
 output "rds_endpoint" {
   value = aws_db_instance.rds.endpoint
+}
+
+output "rds_sg" {
+  value = aws_security_group.rds_sg.id
 }

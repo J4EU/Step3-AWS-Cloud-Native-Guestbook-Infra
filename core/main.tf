@@ -1,3 +1,4 @@
+# ARM 아키텍처 필터링
 data "aws_ami" "amazon_linux_2023_arm64" {
   most_recent = true
   owners      = ["amazon"]

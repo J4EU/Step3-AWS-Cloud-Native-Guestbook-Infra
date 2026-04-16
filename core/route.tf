@@ -36,6 +36,21 @@ resource "aws_route_table" "private_was2_rt" {
   }
 }
 
+# WAS 라우팅 테이블의 라우팅 규칙 (NAT 인스턴스의 ENI로 전송)
+resource "aws_route" "was_nat_route_a" {
+  route_table_id         = aws_route_table.private_was1_rt.id
+  destination_cidr_block = "0.0.0.0/0"
+
+  # 패킷을 인스턴스 본체로 보내는 게 아니라, NAT Instance (AZ-a)의 ENI(네트워크 인터페이스=NIC)로 보낸다
+  network_interface_id = aws_instance.guestbook_nat_instance_a.primary_network_interface_id
+}
+
+resource "aws_route" "was_nat_route_c" {
+  route_table_id         = aws_route_table.private_was2_rt.id
+  destination_cidr_block = "0.0.0.0/0"
+  network_interface_id   = aws_instance.guestbook_nat_instance_c.primary_network_interface_id
+}
+
 resource "aws_route_table_association" "private_rt_assoc1" {
   subnet_id      = aws_subnet.private_subnet1_a.id
   route_table_id = aws_route_table.private_was1_rt.id
@@ -44,19 +59,6 @@ resource "aws_route_table_association" "private_rt_assoc1" {
 resource "aws_route_table_association" "private_rt_assoc2" {
   subnet_id      = aws_subnet.private_subnet1_c.id
   route_table_id = aws_route_table.private_was2_rt.id
-}
-
-# NAT 인스턴스 라우팅 테이블
-resource "aws_route" "was_nat_route_a" {
-  route_table_id         = aws_route_table.private_was1_rt.id
-  destination_cidr_block = "0.0.0.0/0"
-  network_interface_id   = aws_instance.guestbook_nat_instance_a.primary_network_interface_id
-}
-
-resource "aws_route" "was_nat_route_c" {
-  route_table_id         = aws_route_table.private_was2_rt.id
-  destination_cidr_block = "0.0.0.0/0"
-  network_interface_id   = aws_instance.guestbook_nat_instance_c.primary_network_interface_id
 }
 
 resource "aws_route_table" "private_rds_rt" {
