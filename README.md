@@ -6,6 +6,7 @@ Step3-Project
 ├── app
 │   ├── alb_sg.tf
 │   ├── alb.tf
+│   ├── asg.tf
 │   ├── cloudfront.tf
 │   ├── data.tf
 │   ├── index.html
