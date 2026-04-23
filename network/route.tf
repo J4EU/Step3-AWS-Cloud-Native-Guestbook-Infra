@@ -2,7 +2,7 @@
 resource "aws_route_table" "public_rt" {
   vpc_id = aws_vpc.vpc.id
 
-  route {
+  route { # 인터넷 게이트웨이(igw)와 연결
     cidr_block = "0.0.0.0/0"
     gateway_id = aws_internet_gateway.igw.id
   }
@@ -12,11 +12,13 @@ resource "aws_route_table" "public_rt" {
   }
 }
 
+# 퍼블릭 서브넷 (AZ-a) 라우팅 테이블 연결
 resource "aws_route_table_association" "public_rt_assoc1" {
   subnet_id      = aws_subnet.public_subnet1_a.id
   route_table_id = aws_route_table.public_rt.id
 }
 
+# 퍼블릭 서브넷 (AZ-c) 라우팅 테이블 연결
 resource "aws_route_table_association" "public_rt_assoc2" {
   subnet_id      = aws_subnet.public_subnet1_c.id
   route_table_id = aws_route_table.public_rt.id
@@ -31,6 +33,7 @@ resource "aws_route_table" "private_a_rt" {
   }
 }
 
+# 프라이빗 서브넷 (AZ-a) 라우팅 테이블 연결
 resource "aws_route_table_association" "private_rt_assoc1" {
   subnet_id      = aws_subnet.private_subnet1_a.id
   route_table_id = aws_route_table.private_a_rt.id
@@ -44,11 +47,13 @@ resource "aws_route_table" "private_c_rt" {
   }
 }
 
+# 프라이빗 서브넷 (AZ-c) 라우팅 테이블 연결
 resource "aws_route_table_association" "private_rt_assoc2" {
   subnet_id      = aws_subnet.private_subnet1_c.id
   route_table_id = aws_route_table.private_c_rt.id
 }
 
+# 프라이빗 서브넷 (RDS) 라우팅 테이블
 resource "aws_route_table" "private_rds_rt" {
   vpc_id = aws_vpc.vpc.id
 
@@ -57,11 +62,13 @@ resource "aws_route_table" "private_rds_rt" {
   }
 }
 
+# 프라이빗 서브넷 (RDS) 라우팅 테이블 연결
 resource "aws_route_table_association" "private_rds_rt_assoc1" {
   subnet_id      = aws_subnet.private_subnet2_a.id
   route_table_id = aws_route_table.private_rds_rt.id
 }
 
+# 프라이빗 서브넷 (RDS) 라우팅 테이블 연결
 resource "aws_route_table_association" "private_rds_rt_assoc2" {
   subnet_id      = aws_subnet.private_subnet2_c.id
   route_table_id = aws_route_table.private_rds_rt.id

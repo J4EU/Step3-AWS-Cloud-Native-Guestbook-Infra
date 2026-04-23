@@ -4,32 +4,10 @@ resource "aws_subnet" "public_subnet1_a" {
   availability_zone = "ap-northeast-2a"
   cidr_block        = "10.0.1.0/24"
 
-  map_public_ip_on_launch = true
+  map_public_ip_on_launch = true # 퍼블릭 서브넷에 인스턴스 생성 시 자동으로 퍼블릭 IP 할당
 
   tags = {
     Name = "Public-Subnet1-AZ-a"
-  }
-}
-
-# 가용 영역-A 프라이빗 서브넷(WAS)
-resource "aws_subnet" "private_subnet1_a" {
-  vpc_id            = aws_vpc.vpc.id
-  availability_zone = "ap-northeast-2a"
-  cidr_block        = "10.0.11.0/24"
-
-  tags = {
-    Name = "Private-Subnet1-AZ-a"
-  }
-}
-
-# 가용 영역-A 프라이빗 서브넷(RDS)
-resource "aws_subnet" "private_subnet2_a" {
-  vpc_id            = aws_vpc.vpc.id
-  availability_zone = "ap-northeast-2a"
-  cidr_block        = "10.0.21.0/24"
-
-  tags = {
-    Name = "Private-Subnet2-AZ-a"
   }
 }
 
@@ -46,6 +24,17 @@ resource "aws_subnet" "public_subnet1_c" {
   }
 }
 
+# 가용 영역-A 프라이빗 서브넷(WAS)
+resource "aws_subnet" "private_subnet1_a" {
+  vpc_id            = aws_vpc.vpc.id
+  availability_zone = "ap-northeast-2a"
+  cidr_block        = "10.0.11.0/24"
+
+  tags = {
+    Name = "Private-Subnet1-AZ-a"
+  }
+}
+
 # 가용 영역-C 프라이빗 서브넷(WAS)
 resource "aws_subnet" "private_subnet1_c" {
   vpc_id            = aws_vpc.vpc.id
@@ -54,6 +43,17 @@ resource "aws_subnet" "private_subnet1_c" {
 
   tags = {
     Name = "Private-Subnet1-AZ-c"
+  }
+}
+
+# 가용 영역-A 프라이빗 서브넷(RDS)
+resource "aws_subnet" "private_subnet2_a" {
+  vpc_id            = aws_vpc.vpc.id
+  availability_zone = "ap-northeast-2a"
+  cidr_block        = "10.0.21.0/24"
+
+  tags = {
+    Name = "Private-Subnet2-AZ-a"
   }
 }
 

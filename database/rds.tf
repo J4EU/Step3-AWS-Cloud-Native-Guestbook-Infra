@@ -1,6 +1,8 @@
-# 데이터베이스 서브넷 그룹 (가용 영역이 다른 프라이빗 서브넷 2개 이상)
+# RDS 서브넷 그룹
 resource "aws_db_subnet_group" "db_sn_group" {
   name = "db-subnet-group"
+
+  # 프라이빗 서브넷 (RDS) 2개 이상
   subnet_ids = [
     data.terraform_remote_state.network_link.outputs.private_subnet2_a_id,
     data.terraform_remote_state.network_link.outputs.private_subnet2_c_id
@@ -11,7 +13,7 @@ resource "aws_db_subnet_group" "db_sn_group" {
   }
 }
 
-# 파라미터 그룹
+# RDS 파라미터 그룹
 resource "aws_db_parameter_group" "db_pg" {
   name   = "rds-pg"
   family = "mariadb11.8" # MariaDB 11.8 전용 파라미터 그룹
@@ -29,7 +31,7 @@ resource "aws_db_parameter_group" "db_pg" {
 
 resource "aws_db_instance" "rds" {
   identifier        = "guestbook-rds"
-  allocated_storage = 20
+  allocated_storage = 20 # 20GB 스토리지
   engine            = "mariadb"
   engine_version    = "11.8"
   instance_class    = "db.t3.micro"
