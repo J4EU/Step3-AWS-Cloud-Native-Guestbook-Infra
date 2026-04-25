@@ -4,7 +4,7 @@ resource "aws_security_group" "rds" {
   vpc_id      = data.terraform_remote_state.network_state.outputs.vpc_id
 
   tags = {
-    Name = "guestbook-rds-sg"
+    Name = "rds-sg"
   }
 }
 
