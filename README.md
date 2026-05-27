@@ -1,8 +1,10 @@
-# AWS-Cloud-Native-Guestbook-Infra
-
 ## 1. 프로젝트 개요
 
-Terraform을 활용하여 AWS 상에 고가용성 방명록 서비스를 구축한 **클라우드 네이티브** 인프라 프로젝트
+### AWS Guestbook Infrastructure
+
+Terraform을 활용해 AWS 상에서 CloudFront, S3, ALB, Auto Scaling Group, RDS를 조합해 본 인프라 설계 실습 프로젝트
+
+> 이 프로젝트는 운영 수준의 완성된 서비스가 아니라, AWS의 주요 관리형/확장형 구성요소를 직접 연결해 보며 네트워크, 레이어 분리, 트래픽 라우팅, 데이터베이스 분리 구조를 학습하는 데 초점을 둔 Sandbox 프로젝트입니다.
 
 ### 1-1. 프로젝트 목표
 
